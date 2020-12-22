@@ -1,0 +1,21 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="p.css">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+<div id="app" >
+	<img src="logo.png" class="rounded mx-auto d-block">
+      <input style="width:95%; border-radius:50px; font-size: xx-large; height:8%; "  class="searchBar" placeholder="che libro hai bisogno?"v-model="query" v-on:keyup.enter="location.href=link+query">
+    </div>
+  
+
+<script>
+	var vue=new Vue({
+        el:"#app",
+		data:{
+			query:document.getElementsByTagName("input")[0].value,
+			link:document.URL.replace(/home.html|home/,"")+"search.html?q=",
+			
+		}
+
+	})
+</script>

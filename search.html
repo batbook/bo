@@ -1,0 +1,89 @@
+
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<!--<script src="https://unpkg.com/vue@next"></script>-->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet" href="p.css">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+<div id="app">
+<title>{{search}}</title>
+    <div class=" text-center" >
+
+        <input v-model="search"  class="searchBar" v-on:keyup.enter="location.href=value+'='+search">
+
+    </div>
+
+    <div class="container-fluid">
+
+    <libri inline-template v-for="item in json.items">
+        <div>
+            <div class="row">
+                <!--immagine-->
+                    <img class=" col-lg-2 col-4"  v-if="item.volumeInfo.imageLinks!==undefined" :src="item.volumeInfo.imageLinks.thumbnail">
+                    <div v-else class=" col-lg-2 col-4"> non img</div>
+                    
+                <!--info libro-->
+                    <div class=" col-lg-10 col-8" >
+
+                        <h1> 
+                            <a :href="value+'='+item.volumeInfo.title" class="title">{{item.volumeInfo.title.split(".")[0]}}</a><br>
+
+                             <small v-for="author in item.volumeInfo.authors" class="authors">
+                                <a :href="value+'='+author">{{author}}    </a>   
+                            </small> 
+                        </h1> <br>
+                        <div>
+                            
+                            <span v-if="item.volumeInfo.pageCount!==undefined" class="info"> 
+                                numero pagine: {{item.volumeInfo.pageCount}} 
+                            </span><br>
+
+                            <span  v-if="item.saleInfo.listPrice!==undefined" class="info">
+                                prezzo: {{item.saleInfo.listPrice.amount}}  {{item.saleInfo.listPrice.currencyCode}}<br>
+                            </span>
+
+                            <span v-for="categoria in item.volumeInfo.categories" class="info" >
+                                {{categoria}}      
+                            </span> <br>
+                            
+                            <button  v-if="item.volumeInfo.description!==undefined" class="btn-primary col-lg-5 col-4 btn-lg" @click="backcover=!backcover;buy=false" >backcover</button>
+                            <button  @click="buy=!buy;backcover=false" class="btn-primary col-lg-5 col-4 btn-lg">buy</button>
+                        </div>
+                    </div>
+
+            </div>
+
+            <p v-if="backcover==true" @click=backcover=false class="infoBook container">
+                 {{item.volumeInfo.description}}
+            </p>
+            <p v-if="buy==true" @click="buy=false" class="buy row">
+                <span class="col-lg-1"></span>
+                <span class="col-lg">
+                    <a :href="links.amazonit+item.volumeInfo.industryIdentifiers[0].identifier">amazon</a>  <br>
+                </span>
+               
+                <span class="col-lg">
+                    <a :href="links.amazonKindle+item.volumeInfo.industryIdentifiers[0].identifier">kindle</a> <br>
+                </span>
+
+                <span class="col-lg">
+                    <a :href="item.volumeInfo.infoLink">google play</a> <br>
+                </span>
+
+                <span class="col-lg">
+                    <a  v-if="item.volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+item.volumeInfo.industryIdentifiers[0].identifier">kobo</a>  <br>
+                    <a  v-else :href="links.kobo+item.volumeInfo.title">kobo</a> <br>
+                </span>
+            </p>
+           
+         </div>
+     </libri>
+    
+
+    </div>
+
+</div>
+<script type="text/javascript" src="p.js"></script>

@@ -1,0 +1,26 @@
+    a{
+        font-weight:bolder;
+        color:black;
+    }
+    .title{
+        color:black;
+          font-weight:bolder;
+    }
+   /*span{
+        font-size:x-large;
+    }*/
+    .searchBar{
+        width:90%;
+        height:8%;
+        font-size: xx-large;
+        border-radius:50px;
+   }
+    .infoBook{
+        font-size:x-large;
+    }
+     .buy{
+        font-size:40px;
+    }
+    .info{
+        font-size:x-large;
+    }
