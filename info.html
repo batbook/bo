@@ -1,0 +1,63 @@
+
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<!--<script src="https://unpkg.com/vue@next"></script>-->
+<link rel="stylesheet" href="p.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+<div id="app">
+	<title>{{json.items[0].volumeInfo.title.split(".")[0]}}</title>
+	<div class="row">
+		<img  v-if="json.items[0].volumeInfo.imageLinks!==undefined"class="col-lg-1"  :src="json.items[0].volumeInfo.imageLinks.thumbnail">
+
+		<h1 class="col-lg-11 text-center title"> {{json.items[0].volumeInfo.title.split(".")[0]}} <br>
+			<small v-if="json.items[0].volumeInfo.subtitle!==undefined">
+			    {{json.items[0].volumeInfo.subtitle}}
+		    </small>
+	<!--</small v-else>
+	{{json.items[0].volumeInfo.title.split(".")[1]}}
+</small>-->
+	    </h1>
+	</div>
+	<div class="row">
+		<div class="col-lg-2 info">
+			<div v-for="author in json.items[0].volumeInfo.authors">
+				 scritto da:<span class="font-weight-bold">{{author}} </span>
+			</div>
+			<div> 
+			    numero pagine:<span class="font-weight-bold">{{json.items[0].volumeInfo.pageCount}}</span>
+			</div>
+			<div> 
+			    publisher:<span class="font-weight-bold"> {{json.items[0].volumeInfo.publisher}}</span>
+			</div>
+			<div v-if="json.items[0].saleInfo.listPrice!==undefined"> 
+			    prezzo:<span class="font-weight-bold"> {{json.items[0].saleInfo.listPrice.amount}}  {{json.items[0].saleInfo.listPrice.currencyCode}}</span>
+			</div>
+		</div><br>
+		<div class="col-lg-8 infobook"> 
+		    {{json.items[0].volumeInfo.description}}
+		</div><br>
+		<div class="col-lg-2" >
+                <span>
+                    <a :href="links.amazonit+json.items[0].volumeInfo.industryIdentifiers[0].identifier">amazon</a>  <br>
+                </span>
+               
+                <span>
+                    <a :href="links.amazonKindle+json.items[0].volumeInfo.industryIdentifiers[0].identifier">kindle</a> <br>
+                </span>
+
+                <span>
+                    <a :href="json.items[0].volumeInfo.infoLink">google play</a> <br>
+                </span>
+
+                <span>
+                    <a  v-if="json.items[0].volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+json.items[0].volumeInfo.industryIdentifiers[0].identifier">kobo</a>  <br>
+                    <a  v-else :href="links.kobo+json.items[0].volumeInfo.title">kobo</a> <br>
+                </span>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="p.js"></script>
