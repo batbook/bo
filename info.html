@@ -43,19 +43,21 @@
                     <a :href="links.amazonit+json.items[0].volumeInfo.industryIdentifiers[0].identifier">amazon</a>  <br>
                 </span>
                
-                <span>
+                <!--<span>
                     <a :href="links.amazonKindle+json.items[0].volumeInfo.industryIdentifiers[0].identifier">kindle</a> <br>
-                </span>
+                </span>-->
 
                 <span>
                     <a :href="json.items[0].volumeInfo.infoLink">google play</a> <br>
                 </span>
 
                 <span>
-                    <a  v-if="json.items[0].volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+json.items[0].volumeInfo.industryIdentifiers[0].identifier">kobo</a>  <br>
+                    <a  v-if="json.items[0].volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+json.items[0].volumeInfo.industryIdentifiers[0].identifier">kobo</a>
                     <a  v-else :href="links.kobo+json.items[0].volumeInfo.title">kobo</a> <br>
                 </span>
-
+<span>
+                        <a href="https://www.patreon.com/BATBOOK"> sostienici </a>
+                    </span>
 		</div>
 	</div>
 </div>

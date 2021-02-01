@@ -34,14 +34,15 @@ Vue.component('libri', {
     links:{
       googlePlay:'https://play.google.com/store/search?q=',
       kobo:'https://www.kobo.com/kb/kb/search?query=',
-      giunti:'https://www.giunti.it/ricerca?q=',
+     // giunti:'https://www.giunti.it/ricerca?q=',
       //Bompiani:'https://www.bompiani.it/catalogo/',
-      mondadori:'https://www.mondadoristore.it/search/?g=',
-      Penguin:'https://www.penguinrandomhouse.com/search/cazzo?q=',
-      hoepli:'https://www.hoepli.it/libro/cazzo/',
+      //mondadori:'https://www.mondadoristore.it/search/?g=',
+      //Penguin:'https://www.penguinrandomhouse.com/search/cazzo?q=',
+      //hoepli:'https://www.hoepli.it/libro/cazzo/',
       //Feltrinelli:'https://www.feltrinellieditore.it/opera/opera/'
       amazonit:'https://www.amazon.it/s?k=',
-      HamperCollinsIT:"https://www.harpercollins.it/risultati-della-ricerca/?keyword=",
+      amazonKindle:"https://www.amazon.com/s?i=digital-text&k=",
+     // HamperCollinsIT:"https://www.harpercollins.it/risultati-della-ricerca/?keyword=",
     }
   },
 

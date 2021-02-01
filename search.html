@@ -9,7 +9,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
 
 <div id="app">
-<title> {{search}}</title>
+    <title> {{search}}</title>
     <div class=" text-center" >
 
         <input v-model="search"  class="searchBar" v-on:keyup.enter="location.href=value+'='+search">
@@ -18,72 +18,74 @@
 
     <div class="container-fluid">
 
-    <libri inline-template v-for="item in json.items">
-        <div>
-            <div class="row">
-                <!--immagine-->
-                    <img class=" col-lg-2 col-4"  v-if="item.volumeInfo.imageLinks!==undefined" :src="item.volumeInfo.imageLinks.thumbnail" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">
-                    <div v-else class=" col-lg-2 col-4"> non img</div>
+        <libri inline-template v-for="item in json.items">
+            <div>
+                <div class="row">
+                    <!--immagine-->
+                        <img class=" col-lg-2 col-4"  v-if="item.volumeInfo.imageLinks!==undefined" :src="item.volumeInfo.imageLinks.thumbnail" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">
+                        <div v-else class=" col-lg-2 col-4"> non img</div>
                     
-                <!--info libro-->
-                    <div class=" col-lg-10 col-8" >
+                     <!--info libro-->
+                        <div class=" col-lg-10 col-8" >
 
-                        <h1> 
-                            <a :href="value+'='+item.volumeInfo.title" class="title">{{item.volumeInfo.title.split(".")[0]}}</a><br>
+                            <h1> 
+                                <a :href="value+'='+item.volumeInfo.title" class="title">{{item.volumeInfo.title.split(".")[0]}}</a><br>
 
-                             <small v-for="author in item.volumeInfo.authors" class="authors">
-                                <a :href="value+'='+author">{{author}}    </a>   
-                            </small> 
-                        </h1> <br>
-                        <div>
+                                <small v-for="author in item.volumeInfo.authors" class="authors">
+                                    <a :href="value+'='+author">{{author}}    </a>   
+                                </small> 
+                            </h1> <br>
+                            <div>
                             
-                            <span v-if="item.volumeInfo.pageCount!==undefined" class="info"> 
-                                numero pagine: {{item.volumeInfo.pageCount}} 
-                            </span><br>
+                                <span v-if="item.volumeInfo.pageCount!==undefined" class="info"> 
+                                    numero pagine: {{item.volumeInfo.pageCount}} 
+                                 </span><br>
 
-                            <span  v-if="item.saleInfo.listPrice!==undefined" class="info">
-                                prezzo: {{item.saleInfo.listPrice.amount}}  {{item.saleInfo.listPrice.currencyCode}}<br>
-                            </span>
+                                <span  v-if="item.saleInfo.listPrice!==undefined" class="info">
+                                    prezzo: {{item.saleInfo.listPrice.amount}}  {{item.saleInfo.listPrice.currencyCode}}<br>
+                                </span>
 
-                            <span v-for="categoria in item.volumeInfo.categories" class="info" >
-                                {{categoria}}      
-                            </span> <br>
+                                <span v-for="categoria in item.volumeInfo.categories" class="info" >
+                                    {{categoria}}      
+                                </span> <br>
                             
-                            <button  v-if="item.volumeInfo.description!==undefined" class="btn-primary col-lg-4 col-3 btn-lg" @click="backcover=!backcover;buy=false" >backcover</button>
-                            <button  @click="buy=!buy;backcover=false" class="btn-primary col-lg-4 col-3 btn-lg">buy</button>
-                            <button class="col-lg-2 col-2 btn-primary btn-lg" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">
-                            <!--<a :href="'info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">+</a>-->+
-                        </button>
+                                <button  v-if="item.volumeInfo.description!==undefined" class="btn-primary col-lg-4 col-3 btn-lg" @click="backcover=!backcover;buy=false" >backcover</button>
+                                <button  @click="buy=!buy;backcover=false" class="btn-primary col-lg-4 col-3 btn-lg">buy</button>
+                                <button class="col-lg-2 col-2 btn-primary btn-lg" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">+</button>
+                            </div>
                         </div>
-                    </div>
 
-            </div>
+                </div>
 
-            <p v-if="backcover==true" @click=backcover=false class="infoBook container">
-                 {{item.volumeInfo.description}}
-            </p>
-            <p v-if="buy==true" @click="buy=false" class="buy row">
-                <span class="col-lg-1"></span>
-                <span class="col-lg">
-                    <a :href="links.amazonit+item.volumeInfo.industryIdentifiers[0].identifier">amazon</a>  <br>
-                </span>
+                <p v-if="backcover==true" @click=backcover=false class="infoBook container">
+                    {{item.volumeInfo.description}}
+                </p>
+                <p v-if="buy==true" @click="buy=false" class="buy row">
+                    <span class="col-lg-1"></span>
+                    <span class="col-lg">
+                        <a :href="links.amazonit+item.volumeInfo.industryIdentifiers[0].identifier">amazon</a>  <br>
+                    </span>
                
-                <span class="col-lg">
+                    <!-- <span class="col-lg">
                     <a :href="links.amazonKindle+item.volumeInfo.industryIdentifiers[0].identifier">kindle</a> <br>
-                </span>
+                    </span>-->
 
-                <span class="col-lg">
-                    <a :href="item.volumeInfo.infoLink">google play</a> <br>
-                </span>
+                    <span class="col-lg">
+                        <a :href="item.volumeInfo.infoLink">google play</a> <br>
+                    </span>
 
-                <span class="col-lg">
-                    <a  v-if="item.volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+item.volumeInfo.industryIdentifiers[0].identifier">kobo</a>  <br>
-                    <a  v-else :href="links.kobo+item.volumeInfo.title">kobo</a> <br>
-                </span>
-            </p>
+                    <span class="col-lg">
+                        <a  v-if="item.volumeInfo.industryIdentifiers[0].identifier.length==13":href="links.kobo+item.volumeInfo.industryIdentifiers[0].identifier">kobo</a>
+                        <a  v-else :href="links.kobo+item.volumeInfo.title">kobo</a> <br>
+                    </span>
+                    <span class="col-lg">
+                        <a href="https://www.patreon.com/BATBOOK"> sostienici </a>
+                    </span>
+                    <span class="col-lg-1"></span>
+                 </p>
            
-         </div>
-     </libri>
+            </div>
+        </libri>
     
 
     </div>
