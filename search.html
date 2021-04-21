@@ -12,17 +12,17 @@
     <title> {{search}}</title>
     <div class=" text-center" >
 
-        <input v-model="search"  class="searchBar" v-on:keyup.enter="location.href=value+'='+search">
+        <input v-model="search"  class="searchBar" v-on:keyup.enter="location.href=value+'?q='+search">
 
     </div>
 
     <div class="container-fluid">
 
-        <libri inline-template v-for="item in json.items">
+        <libri  v-if="json!==undefined" inline-template v-for="item in json.items">
             <div>
                 <div class="row">
                     <!--immagine-->
-                        <img class=" col-lg-2 col-4"  v-if="item.volumeInfo.imageLinks!==undefined" :src="item.volumeInfo.imageLinks.thumbnail" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">
+                        <img class=" col-lg-2 col-4"  v-if="item.volumeInfo.imageLinks!==undefined" :src="item.volumeInfo.imageLinks.thumbnail" @click="location.href='info.html?q='+item.volumeInfo.title">
                         <div v-else class=" col-lg-2 col-4"> non img</div>
                     
                      <!--info libro-->
@@ -51,7 +51,7 @@
                             
                                 <button  v-if="item.volumeInfo.description!==undefined" class="btn-primary col-lg-4 col-3 btn-lg" @click="backcover=!backcover;buy=false" >backcover</button>
                                 <button  @click="buy=!buy;backcover=false" class="btn-primary col-lg-4 col-3 btn-lg">buy</button>
-                                <button class="col-lg-2 col-2 btn-primary btn-lg" @click="location.href='info.html?q='+item.volumeInfo.industryIdentifiers[0].identifier">+</button>
+                                <button class="col-lg-2 col-2 btn-primary btn-lg" @click="location.href='info.html?q='+item.volumeInfo.title">+</button>
                             </div>
                         </div>
 
@@ -79,14 +79,14 @@
                         <a  v-else :href="links.kobo+item.volumeInfo.title">kobo</a> <br>
                     </span>
                     <span class="col-lg">
-                        <a href="https://www.patreon.com/BATBOOK"> sostienici </a>
+                        <!--<a href="https://www.patreon.com/BATBOOK"> sostienici </a>-->
                     </span>
                     <span class="col-lg-1"></span>
                  </p>
            
             </div>
         </libri>
-    
+        <span  v-if="json==undefined">ci dispiace non aver trovato nulla. modifica la ricerca in modo da trovare i risultati sperati</span>
 
     </div>
 

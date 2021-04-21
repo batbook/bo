@@ -1,33 +1,19 @@
-var path=document.URL.split("?")[1].split("&")
-if(!path[0].split("=")[1]){
-  location.href="home.html"
+
+var path=document.URL.split("=")
+if(!path[1]){
+  location.href=document.URL.replace(/search\S+/,"home")
 }
-fetch("https://www.googleapis.com/books/v1/volumes?download=DOWNLOAD_UNDEFINED&filter=FILTER_UNDEFINED&langRestrict=it&libraryRestrict=LIBRARY_RESTRICT_UNDEFINED&maxAllowedMaturityRating=MAX_ALLOWED_MATURITY_RATING_UNDEFINED&orderBy="+ (Boolean(path[1]) ?((path[1]=="order=n") ? "newest" : "relevance"): "relevance")+"&printType=BOOKS&q="+decodeURI(path[0].split("=")[1]))
+fetch("https://www.googleapis.com/books/v1/volumes?download=DOWNLOAD_UNDEFINED&filter=FILTER_UNDEFINED&langRestrict="+navigator.language.slice(0,2)+"&libraryRestrict=LIBRARY_RESTRICT_UNDEFINED&maxAllowedMaturityRating=MAX_ALLOWED_MATURITY_RATING_UNDEFINED&orderBy=relevance&printType=BOOKS&projection=FULL&q="+decodeURI(path[1]))
     .then(response => response.json())
     .then(data => {vue.json=data;console.log(data.items)});
-
-
-Vue.component('libri', {
-   template: '#libri-template',
-    data: function () {
-    return {
-
-      backcover:false,
-      buy:false,
-      //isbn:vue.json.items[].volumeInfo.industryIdentifiers[0].identifier
-      //json:vue.json
-    }
-  },
-});
 
  var vue=new Vue({
   el:'#app',
 
   data: {
-    value:document.URL.split('?')[0],
+    value:path[0],
     title:path[1],
-    select:'bo',
-    search:decodeURI(path[0].split("=")[1]),
+    search:decodeURI(path[1]),
 
     json:null,
     links:{
@@ -46,3 +32,4 @@ Vue.component('libri', {
   },
 
 })
+ 

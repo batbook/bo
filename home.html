@@ -5,9 +5,16 @@
 <title>batbook</title>
 <div id="app" >
 	<img src="logo.png" class="rounded mx-auto d-block">
-      <input style="width:95%; border-radius:50px; font-size: xx-large; height:8%; "  class="searchBar" placeholder="che libro hai bisogno?"v-model="query" v-on:keyup.enter="location.href=link+query"><br>
-      <a style="font-size: 40px" href="https://www.patreon.com/BATBOOK"> sostienici </a>
-    </div>
+    <input style="width:95%; border-radius:50px; font-size: xx-large; height:8%;" @input="suggeriti"  class="searchBar" placeholder="che libro hai bisogno?" v-model="query" v-on:keyup.enter="location.href=link+query"><br>
+    <div v-if="query!==undefined">
+      	<div v-for="book in json" @click="location.href='info.html?q='+book.volumeInfo.title" class="row">
+      	    <img :src="book.volumeInfo.imageLinks.thumbnail" class="col-lg-1 col-2">
+      	   <span class="info"> {{book.volumeInfo.title.split(".")[0]}}<span>
+      	</div>
+
+      </div>
+    <!--<a style="font-size: 40px" href="https://www.patreon.com/BATBOOK"> sostienici </a>-->
+</div>
   
 
 <script>
@@ -15,8 +22,15 @@
         el:"#app",
 		data:{
 			query:document.getElementsByTagName("input")[0].value,
-			link:document.URL.replace(/home.html|home/,"")+"search.html?q=",
-			
+			link:"search.html?q=",
+			json:""
+		},
+		methods:{
+			suggeriti:function(){
+				fetch("https://www.googleapis.com/books/v1/volumes?download=DOWNLOAD_UNDEFINED&filter=FILTER_UNDEFINED&langRestrict=it&libraryRestrict=LIBRARY_RESTRICT_UNDEFINED&maxAllowedMaturityRating=MAX_ALLOWED_MATURITY_RATING_UNDEFINED&orderBy=relevance&printType=BOOKS&projection=FULL&q="+this.query)
+                .then(response => response.json())
+                .then(data => {this.json=data.items.slice(0,3)});
+			}
 		}
 
 	})
